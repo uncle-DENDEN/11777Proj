@@ -60,7 +60,3 @@ def get_loader(ds, batch_size, num_workers, pin_memory=True, drop_last=True, shu
                       pin_memory=pin_memory,
                       shuffle=shuffle,
                       drop_last=drop_last)
-
-ds = coco()
-img, cap = ds[8]
-print('jjj')
