@@ -3,7 +3,6 @@ from torch.utils.data import DataLoader, Dataset
 import numpy as np
 import torch
 import torchvision.transforms as transforms 
-from torchvision.datasets import CocoDetection
 
 
 class winoground(Dataset):
@@ -32,31 +31,12 @@ class winoground(Dataset):
         return len(self._winoground)
 
 
-class coco(Dataset):
-    def __init__(self, h=224, w=224) -> None:
-        super().__init__()
-        root = '/user_data/weifanw/coco/train2014/train2014'
-        annotation_file = '/user_data/weifanw/coco/annotations/captions_train2014.json'
-        
-        tfs = transforms.Compose([
-            transforms.PILToTensor(),
-            transforms.Resize((h, w))
-        ])
-        self._coco = CocoDetection(root, annotation_file, transform=tfs)
-        
-    def __getitem__(self, index):
-        img, target = self._coco[index]
-        cap = [tar['caption'] for tar in target]
-        return img, cap
-    
-    def __len__(self):
-        return len(self._coco)
-
-
-def get_loader(ds, batch_size, num_workers, pin_memory=True, drop_last=True, shuffle=True):
-    return DataLoader(ds, 
+def winoground_loader(height, width, batch_size, num_workers, pin_memory=True, drop_last=True, shuffle=True):
+    return DataLoader(winoground(h=height, w=width), 
                       batch_size=batch_size,
                       num_workers=num_workers,
                       pin_memory=pin_memory,
                       shuffle=shuffle,
                       drop_last=drop_last)
+
+

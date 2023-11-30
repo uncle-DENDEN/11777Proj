@@ -1,6 +1,6 @@
 from lavis.models import load_model_and_preprocess
 from lavis.processors import load_processor
-from datautils import *
+from winoground import winoground
 import torch
 import torch.nn as nn
 from tqdm import trange

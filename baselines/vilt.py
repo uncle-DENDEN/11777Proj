@@ -1,5 +1,5 @@
 from transformers import ViltProcessor, ViltForImageAndTextRetrieval
-from datautils import *
+from winoground import winoground
 import torch
 import torch.nn as nn
 from tqdm import trange
