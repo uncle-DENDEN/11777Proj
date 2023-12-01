@@ -98,13 +98,13 @@ class ModifiedResNet(nn.Module):
     - The final pooling layer is a QKV attention instead of an average pool
     """
 
-    def __init__(self, layers, output_dim, heads, input_resolution=224, width=64):
+    def __init__(self, layers, output_dim, heads, in_channels=3, input_resolution=224, width=64):
         super().__init__()
         self.output_dim = output_dim
         self.input_resolution = input_resolution
 
         # the 3-layer stem
-        self.conv1 = nn.Conv2d(3, width // 2, kernel_size=3, stride=2, padding=1, bias=False)
+        self.conv1 = nn.Conv2d(in_channels, width // 2, kernel_size=3, stride=2, padding=1, bias=False)
         self.bn1 = nn.BatchNorm2d(width // 2)
         self.conv2 = nn.Conv2d(width // 2, width // 2, kernel_size=3, padding=1, bias=False)
         self.bn2 = nn.BatchNorm2d(width // 2)
@@ -240,6 +240,7 @@ class CLIP(nn.Module):
     def __init__(self,
                  embed_dim: int,
                  # vision
+                 in_channels: int,
                  image_resolution: int,
                  vision_layers: Union[Tuple[int, int, int, int], int],
                  vision_width: int,
@@ -261,6 +262,7 @@ class CLIP(nn.Module):
                 layers=vision_layers,
                 output_dim=embed_dim,
                 heads=vision_heads,
+                in_channels=in_channels,
                 input_resolution=image_resolution,
                 width=vision_width
             )

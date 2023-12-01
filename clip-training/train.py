@@ -4,7 +4,7 @@ import numpy as np
 import os
 from omegaconf import OmegaConf
 
-from dataloader.dataset import CLIP_COCO_dataset
+from dataloader.dataset import CLIP_COCO_dataset, Coco_Aug
 from dataloader.data_loaders import get_dataloader
 
 from model.model import CLIP
@@ -204,7 +204,8 @@ def main():
     logger.info(f"Training/evaluation parameters {train_config}")
 
     # getting dataset for training
-    train_dataset = CLIP_COCO_dataset(config, tokenizer)
+    # train_dataset = CLIP_COCO_dataset(config, tokenizer)
+    train_dataset = Coco_Aug(tokenizer)
 
     # Now training
     global_step, avg_loss = train(config, train_dataset, model)
